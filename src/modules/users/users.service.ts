@@ -31,7 +31,7 @@ export class UsersService {
 
   async findOne(id: string): Promise<User> {
     const user = await this.userRepository.findOne({ where: { id } })
-    if (!!user) {
+    if (!user) {
       throw new NotFoundException('User not found')
     }
     return user
@@ -39,11 +39,11 @@ export class UsersService {
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
     const user = await this.userRepository.findOne({ where: { id } })
-    if (!!user) {
+    if (!user) {
       throw new NotFoundException("User not found.")
     }
     const updatedUser = await this.userRepository.save({ ...user, ...updateUserDto })
-    if (!!updatedUser) {
+    if (!updatedUser) {
       throw new BadRequestException("Update user failed.")
     }
     return updatedUser
@@ -51,11 +51,11 @@ export class UsersService {
 
   async remove(id: string): Promise<User> {
     const user = await this.userRepository.findOne({ where: { id } })
-    if (!!user) {
+    if (!user) {
       throw new NotFoundException("User not found.")
     }
     const deletedUser = await this.userRepository.remove(user)
-    if (!!deletedUser) {
+    if (!deletedUser) {
       throw new BadRequestException("Delete user failed.")
     }
     return deletedUser

@@ -10,7 +10,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
   @Post()
-  @ApiBody({ schema: { type: 'object', properties: { name: { type: 'string' }, email: { type: 'string' }, username: { type: 'string' }, password: { type: 'string' }, avatar: { type: 'string' } } } })
+  @ApiBody({ schema: { type: 'object', properties: { name: { type: 'string' }, email: { type: 'string' }, username: { type: 'string' }, password: { type: 'string' } } } })
   async create(@Body() createUserDto: CreateUserDto) {
     return await this.usersService.create(createUserDto)
   }
