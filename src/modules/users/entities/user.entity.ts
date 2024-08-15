@@ -1,8 +1,7 @@
 import { AbstractEntity } from 'src/common/abstract/entity.abstract'
 import { Column, Entity, JoinColumn, OneToOne } from 'typeorm'
 import { Avatar } from './avatar.entity'
-import { IsEmail, MaxLength, Validate } from 'class-validator'
-import { isValidPhoneNumber } from 'src/helpers/validate'
+import { IsEmail, MaxLength } from 'class-validator'
 
 @Entity()
 export class User extends AbstractEntity {
@@ -25,7 +24,11 @@ export class User extends AbstractEntity {
     @Column('text', { nullable: false, select: false })
     hashedPassword: string
 
-    @OneToOne(() => Avatar, (avatar) => avatar.user, { cascade: true })
+    @OneToOne(() => Avatar, (avatar) => avatar.user, {
+        cascade: true,
+        nullable: true,
+        onDelete: 'CASCADE',
+    })
     @JoinColumn()
     avatar?: Avatar
 }

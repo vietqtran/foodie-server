@@ -37,6 +37,6 @@ export class CreateUserDto {
     @ApiProperty()
     password: string
 
-    @ApiProperty({ type: () => Avatar })
+    @ApiProperty({ type: () => CreateAvatarDto })
     avatar?: CreateAvatarDto
 }

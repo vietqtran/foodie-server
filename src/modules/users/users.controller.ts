@@ -3,12 +3,13 @@ import { UsersService } from './users.service'
 import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
+import { Public } from 'src/common/decorators/public.decorator'
 
 @ApiTags('USERS')
 @ApiBearerAuth()
 @Controller('users')
 export class UsersController {
-    constructor(private readonly usersService: UsersService) {}
+    constructor(private readonly usersService: UsersService) { }
 
     @Post()
     async create(@Body() createUserDto: CreateUserDto) {
