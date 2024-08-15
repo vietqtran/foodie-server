@@ -8,7 +8,7 @@ import { UsersService } from 'src/modules/users/users.service'
 export class LocalStrategy extends PassportStrategy(Strategy) {
     constructor(private userService: UsersService) {
         super({
-            usernameField: 'email'
+            usernameField: 'email',
         })
     }
     async validate(email: string, password: string): Promise<User> {

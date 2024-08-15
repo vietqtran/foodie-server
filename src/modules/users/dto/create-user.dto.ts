@@ -1,5 +1,5 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { Avatar } from "../entities/avatar.entity";
+import { ApiProperty } from '@nestjs/swagger'
+import { Avatar } from '../entities/avatar.entity'
 
 export class CreateAvatarDto {
     @ApiProperty()
@@ -23,19 +23,19 @@ export class CreateAvatarDto {
 
 export class CreateUserDto {
     @ApiProperty()
-    name: string;
+    name: string
 
     @ApiProperty()
-    email: string;
+    email: string
 
     @ApiProperty()
-    phoneNumber: string;
+    phoneNumber: string
 
     @ApiProperty()
-    username?: string;
+    username?: string
 
     @ApiProperty()
-    password: string;
+    password: string
 
     @ApiProperty({ type: () => Avatar })
     avatar?: CreateAvatarDto

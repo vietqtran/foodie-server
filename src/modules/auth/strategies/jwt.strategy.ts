@@ -10,12 +10,12 @@ import { TokenPayload } from '../types/token-payload.type'
 export class JwtStrategy extends PassportStrategy(Strategy) {
     constructor(
         private readonly configService: ConfigService,
-        private readonly userService: UsersService
+        private readonly userService: UsersService,
     ) {
         super({
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
             ignoreExpiration: false,
-            secretOrKey: configService.get<string>('JWT_SECRET')
+            secretOrKey: configService.get<string>('JWT_SECRET'),
         })
     }
 

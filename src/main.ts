@@ -14,7 +14,7 @@ async function bootstrap() {
 
     app.useGlobalPipes(new ValidationPipe())
     app.useGlobalInterceptors(new TransformInterceptor())
-    app.useGlobalInterceptors(new LoggingInterceptor)
+    app.useGlobalInterceptors(new LoggingInterceptor())
     app.useGlobalGuards(new JwtAuthGuard(app.get(Reflector)))
 
     const config = new DocumentBuilder()

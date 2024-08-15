@@ -1,6 +1,6 @@
-import { Column, Entity } from "typeorm";
-import { AbstractEntity } from "./entity.abstract";
-import { IsNumber, IsUrl, MaxLength } from "class-validator";
+import { Column, Entity } from 'typeorm'
+import { AbstractEntity } from './entity.abstract'
+import { IsNumber, IsUrl, MaxLength } from 'class-validator'
 
 @Entity()
 export abstract class S3File extends AbstractEntity {
