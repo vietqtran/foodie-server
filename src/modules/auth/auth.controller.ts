@@ -1,34 +1,39 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { RegisterDto } from './dto/register.dto';
+import { Public } from 'src/common/decorators/public.decorator';
+import { CurrentUser } from 'src/common/decorators/current-user.decorator';
+import { LoginWithEmailDto, LoginWithPhoneNumberDto } from './dto/login.dto';
+import { User } from '../users/entities/user.entity';
 
 @Controller('auth')
+@ApiTags('AUTH')
+@ApiBearerAuth()
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) { }
 
-  @Post()
-  create(@Body() createAuthDto: CreateAuthDto) {
-    return this.authService.create(createAuthDto);
+  @Post('/register')
+  @Public()
+  async register(@Body() registerDto: RegisterDto) {
+    return await this.authService.register(registerDto)
   }
 
-  @Get()
-  findAll() {
-    return this.authService.findAll();
+  @Post('/login/email')
+  @Public()
+  async loginWithEmail(@Body() loginWithEmailDto: LoginWithEmailDto) {
+    return await this.authService.loginWithEmail(loginWithEmailDto)
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.authService.findOne(+id);
+  @Post('/login/phone')
+  @Public()
+  async loginWithPhoneNumber(@Body() loginWithPhoneNumberDto: LoginWithPhoneNumberDto) {
+    return await this.authService.loginWithPhoneNumber(loginWithPhoneNumberDto)
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
-    return this.authService.update(+id, updateAuthDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.authService.remove(+id);
+  @Get('/me')
+  async me(@CurrentUser() user: User) {
+    console.log(user)
+    return user
   }
 }

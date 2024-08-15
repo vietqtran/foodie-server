@@ -1,26 +1,43 @@
 import { Injectable } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { UsersService } from '../users/users.service';
+import { RegisterDto, RegisterResponseDto } from './dto/register.dto';
+import { User } from '../users/entities/user.entity';
+import { TokenPayload } from './types/token-payload.type';
+import { JwtService } from '@nestjs/jwt';
+import { LoginResponseDto, LoginWithEmailDto, LoginWithPhoneNumberDto } from './dto/login.dto';
 
 @Injectable()
 export class AuthService {
-  create(createAuthDto: CreateAuthDto) {
-    return 'This action adds a new auth';
+  constructor(private readonly usersService: UsersService, private readonly jwtService: JwtService) { }
+
+  async register(registerDto: RegisterDto): Promise<RegisterResponseDto> {
+    const { email, password, name, phoneNumber, username } = registerDto
+    const user = await this.usersService.create({ email, password, name, phoneNumber, username: username ? username : email.split("@")[0] })
+    const token = await this.generateAccessToken(user)
+    return { user, token }
   }
 
-  findAll() {
-    return `This action returns all auth`;
+  async loginWithEmail(loginWithEmailDto: LoginWithEmailDto): Promise<LoginResponseDto> {
+    const { email, password } = loginWithEmailDto
+    const user = await this.usersService.validateUser(email, null, password)
+    const token = await this.generateAccessToken(user)
+    return { user, token }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
+  async loginWithPhoneNumber(loginWithPhoneNumberDto: LoginWithPhoneNumberDto): Promise<LoginResponseDto> {
+    const { phoneNumber, password } = loginWithPhoneNumberDto
+    const user = await this.usersService.validateUser(null, phoneNumber, password)
+    const token = await this.generateAccessToken(user)
+    return { user, token }
   }
 
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
+  async generateAccessToken(user: User) {
+    const tokenPayload: TokenPayload = {
+      sub: user.id,
+      name: user.username,
+      email: user.email,
+    }
+    const token = await this.jwtService.signAsync(tokenPayload)
+    return token
   }
 }

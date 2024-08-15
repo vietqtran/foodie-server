@@ -9,5 +9,6 @@ import { Avatar } from './entities/avatar.entity';
   imports: [TypeOrmModule.forFeature([User]), TypeOrmModule.forFeature([Avatar]), UsersModule],
   controllers: [UsersController],
   providers: [UsersService],
+  exports: [UsersService]
 })
 export class UsersModule { }

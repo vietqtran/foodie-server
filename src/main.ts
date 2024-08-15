@@ -1,9 +1,10 @@
-import { ValidationPipe } from '@nestjs/common'
-import { NestFactory } from '@nestjs/core'
-import { AppModule } from './modules/_app/app.module'
-import { TransformInterceptor } from './common/interceptors/transform.interceptor'
-import { Logger } from '@nestjs/common'
+import { Logger, ValidationPipe } from '@nestjs/common'
+import { NestFactory, Reflector } from '@nestjs/core'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
+import { LoggingInterceptor } from './common/interceptors/logging.interceptor'
+import { TransformInterceptor } from './common/interceptors/transform.interceptor'
+import { AppModule } from './modules/_app/app.module'
+import JwtAuthGuard from './modules/auth/guard/jwt.guard'
 
 async function bootstrap() {
     const logger = new Logger()
@@ -13,8 +14,11 @@ async function bootstrap() {
 
     app.useGlobalPipes(new ValidationPipe())
     app.useGlobalInterceptors(new TransformInterceptor())
+    app.useGlobalInterceptors(new LoggingInterceptor)
+    app.useGlobalGuards(new JwtAuthGuard(app.get(Reflector)))
 
     const config = new DocumentBuilder()
+        .addBearerAuth()
         .setTitle('Foodie Server')
         .setDescription('The Foodie API documentation')
         .setVersion('1.0')
