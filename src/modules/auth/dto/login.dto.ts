@@ -20,5 +20,8 @@ export class LoginWithPhoneNumberDto extends LoginDto {
 
 export class LoginResponseDto {
     user: User
-    token: string
+    tokens: {
+        accessToken: string
+        refreshToken: string
+    }
 }

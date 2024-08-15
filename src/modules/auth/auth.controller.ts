@@ -6,12 +6,14 @@ import { Public } from 'src/common/decorators/public.decorator'
 import { CurrentUser } from 'src/common/decorators/current-user.decorator'
 import { LoginWithEmailDto, LoginWithPhoneNumberDto } from './dto/login.dto'
 import { User } from '../users/entities/user.entity'
+import JwtRefreshGuard from './guard/jwt-refresh.guard'
+import { RefreshTokenDto } from './dto/refresh-token.dto'
 
 @Controller('auth')
 @ApiTags('AUTH')
 @ApiBearerAuth()
 export class AuthController {
-    constructor(private readonly authService: AuthService) {}
+    constructor(private readonly authService: AuthService) { }
 
     @Post('/register')
     @Public()
@@ -29,6 +31,13 @@ export class AuthController {
     @Public()
     async loginWithPhoneNumber(@Body() loginWithPhoneNumberDto: LoginWithPhoneNumberDto) {
         return await this.authService.loginWithPhoneNumber(loginWithPhoneNumberDto)
+    }
+
+    @Post('/refresh')
+    @UseGuards(JwtRefreshGuard)
+    @Public()
+    async refreshToken(@Body() refreshTokenDto: RefreshTokenDto) {
+        return await this.authService.refreshToken(refreshTokenDto.refreshToken)
     }
 
     @Get('/me')

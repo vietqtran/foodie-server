@@ -22,5 +22,8 @@ export class RegisterDto {
 
 export class RegisterResponseDto {
     user: User
-    token: string
+    tokens: {
+        accessToken: string
+        refreshToken: string
+    }
 }
