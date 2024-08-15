@@ -5,14 +5,18 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { User } from './entities/user.entity'
 import { Repository } from 'typeorm'
 import * as bcrypt from 'bcrypt'
+import { isValidPhoneNumber } from 'src/helpers/validate'
 
 @Injectable()
 export class UsersService {
-    constructor(@InjectRepository(User) private userRepository: Repository<User>) {}
+    constructor(@InjectRepository(User) private userRepository: Repository<User>) { }
 
     async create(createUserDto: CreateUserDto): Promise<User> {
-        console.log(createUserDto)
         const { email, password, username, phoneNumber } = createUserDto
+        const isValidPhone = phoneNumber ? isValidPhoneNumber(phoneNumber) : true
+        if (!isValidPhone) {
+            throw new BadRequestException('Invalid phone number.')
+        }
         const isDuplicatedUserInfor = await this.userRepository.findOne({
             where: [{ email }, { username }, { phoneNumber }],
         })
@@ -22,6 +26,7 @@ export class UsersService {
         const hashedPassword = await this.hashPassword(password)
         const user = this.userRepository.create({ ...createUserDto, hashedPassword })
         const createdUser = await this.userRepository.save(user)
+        delete createdUser.hashedPassword
         return createdUser
     }
 

@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsEmail, IsPhoneNumber } from 'class-validator'
+import { IsEmail, IsPhoneNumber, Validate } from 'class-validator'
 import { User } from 'src/modules/users/entities/user.entity'
 
 export abstract class LoginDto {

@@ -1,7 +1,8 @@
 import { AbstractEntity } from 'src/common/abstract/entity.abstract'
 import { Column, Entity, JoinColumn, OneToOne } from 'typeorm'
 import { Avatar } from './avatar.entity'
-import { IsEmail, MaxLength } from 'class-validator'
+import { IsEmail, MaxLength, Validate } from 'class-validator'
+import { isValidPhoneNumber } from 'src/helpers/validate'
 
 @Entity()
 export class User extends AbstractEntity {
@@ -15,7 +16,6 @@ export class User extends AbstractEntity {
     email: string
 
     @Column('varchar', { length: 15, nullable: true, default: null })
-    @MaxLength(15, { message: 'Invalid phone number.' })
     phoneNumber: string
 
     @Column('varchar', { length: 255, unique: true, nullable: true, default: null })
