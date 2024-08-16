@@ -9,7 +9,7 @@ import { Public } from 'src/common/decorators/public.decorator'
 @ApiBearerAuth()
 @Controller('users')
 export class UsersController {
-    constructor(private readonly usersService: UsersService) { }
+    constructor(private readonly usersService: UsersService) {}
 
     @Post()
     @Public()

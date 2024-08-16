@@ -13,7 +13,7 @@ export class AuthService {
         private readonly usersService: UsersService,
         private readonly jwtService: JwtService,
         private readonly configService: ConfigService,
-    ) { }
+    ) {}
 
     async register(registerDto: RegisterDto): Promise<RegisterResponseDto> {
         const { email, password, name, phoneNumber, username } = registerDto

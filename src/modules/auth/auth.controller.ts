@@ -12,7 +12,7 @@ import { RefreshTokenDto } from './dto/refresh-token.dto'
 @Controller('auth')
 @ApiTags('AUTH')
 export class AuthController {
-    constructor(private readonly authService: AuthService) { }
+    constructor(private readonly authService: AuthService) {}
 
     @Post('/register')
     @Public()

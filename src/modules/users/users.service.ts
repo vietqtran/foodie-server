@@ -9,7 +9,7 @@ import { isValidPhoneNumber } from 'src/helpers/validate'
 
 @Injectable()
 export class UsersService {
-    constructor(@InjectRepository(User) private userRepository: Repository<User>) { }
+    constructor(@InjectRepository(User) private userRepository: Repository<User>) {}
 
     async create(createUserDto: CreateUserDto): Promise<User> {
         const { email, password, username, phoneNumber } = createUserDto

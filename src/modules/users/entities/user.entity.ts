@@ -24,7 +24,7 @@ export class User extends AbstractEntity {
     @Column('text', { nullable: false, select: false })
     hashedPassword: string
 
-    @OneToOne(() => File, (avatar) => avatar.user, {
+    @OneToOne(() => File, (file) => file.user, {
         cascade: true,
         nullable: true,
         onDelete: 'CASCADE',

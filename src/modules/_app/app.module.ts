@@ -6,6 +6,8 @@ import { UsersModule } from '../users/users.module'
 import { AuthModule } from '../auth/auth.module'
 import { AppLoggerMiddleware } from 'src/common/middlewares/logging.middleware'
 import { FileModule } from '../file/file.module'
+import { PCategoriesModule } from '../p_categories/p_categories.module'
+import { RCategoriesModule } from '../r_categories/r_categories.module'
 
 @Module({
     imports: [
@@ -36,7 +38,9 @@ import { FileModule } from '../file/file.module'
         }),
         AuthModule,
         UsersModule,
-        FileModule
+        FileModule,
+        PCategoriesModule,
+        RCategoriesModule,
     ],
 })
 export class AppModule implements NestModule {

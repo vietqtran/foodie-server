@@ -1,8 +1,7 @@
-import { Controller } from "@nestjs/common";
-import { FileService } from "./file.service";
-
+import { Controller } from '@nestjs/common'
+import { FileService } from './file.service'
 
 @Controller('file')
 export class FileController {
-  constructor(private readonly fileService: FileService) { }
+    constructor(private readonly fileService: FileService) {}
 }
