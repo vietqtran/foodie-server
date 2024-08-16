@@ -1,6 +1,7 @@
 import { AbstractEntity } from 'src/common/abstract/entity.abstract'
 import { File } from 'src/modules/file/entities/file.entity'
-import { Column, Entity, JoinColumn, OneToOne } from 'typeorm'
+import { Restaurant } from 'src/modules/restaurants/entities/restaurant.entity'
+import { Column, Entity, JoinColumn, ManyToMany, OneToOne } from 'typeorm'
 
 @Entity()
 export class RCategory extends AbstractEntity {
@@ -17,4 +18,10 @@ export class RCategory extends AbstractEntity {
     })
     @JoinColumn()
     image?: File
+
+    @ManyToMany(() => Restaurant, (restaurant) => restaurant.categories, {
+        cascade: true,
+        onDelete: 'CASCADE',
+    })
+    restaurants: Restaurant[]
 }

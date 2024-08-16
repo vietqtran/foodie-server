@@ -8,6 +8,9 @@ import { AppLoggerMiddleware } from 'src/common/middlewares/logging.middleware'
 import { FileModule } from '../file/file.module'
 import { PCategoriesModule } from '../p_categories/p_categories.module'
 import { RCategoriesModule } from '../r_categories/r_categories.module'
+import { RestaurantsModule } from '../restaurants/restaurants.module'
+import { MerchantsModule } from '../merchants/merchants.module'
+import { ProductsModule } from '../products/products.module'
 
 @Module({
     imports: [
@@ -40,7 +43,10 @@ import { RCategoriesModule } from '../r_categories/r_categories.module'
         UsersModule,
         FileModule,
         PCategoriesModule,
+        ProductsModule,
         RCategoriesModule,
+        RestaurantsModule,
+        MerchantsModule
     ],
 })
 export class AppModule implements NestModule {

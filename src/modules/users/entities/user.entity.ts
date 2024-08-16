@@ -1,7 +1,8 @@
 import { AbstractEntity } from 'src/common/abstract/entity.abstract'
-import { Column, Entity, JoinColumn, OneToOne } from 'typeorm'
+import { Column, Entity, JoinColumn, ManyToMany, OneToOne } from 'typeorm'
 import { IsEmail, MaxLength } from 'class-validator'
 import { File } from 'src/modules/file/entities/file.entity'
+import { Restaurant } from 'src/modules/restaurants/entities/restaurant.entity'
 
 @Entity()
 export class User extends AbstractEntity {
@@ -31,4 +32,7 @@ export class User extends AbstractEntity {
     })
     @JoinColumn()
     avatar?: File
+
+    @ManyToMany(() => Restaurant, (restaurant) => restaurant.users)
+    favouriteRestaurants: Restaurant[]
 }
