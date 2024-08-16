@@ -1,6 +1,7 @@
 import { AbstractEntity } from "src/common/abstract/entity.abstract";
 import { File } from "src/modules/file/entities/file.entity";
-import { Column, Entity, JoinTable, OneToMany } from "typeorm";
+import { PCategory } from "src/modules/p_categories/entities/p_category.entity";
+import { Column, Entity, JoinTable, ManyToMany, OneToMany } from "typeorm";
 
 @Entity()
 export class Product extends AbstractEntity {
@@ -13,7 +14,7 @@ export class Product extends AbstractEntity {
     @Column('int', { nullable: false, default: 0 })
     soldQuantity: number
 
-    @OneToMany(() => File, (file) => file.product)
+    @ManyToMany(() => File, (file) => file.product)
     @JoinTable({
         name: 'product_images',
         joinColumn: {
@@ -26,4 +27,18 @@ export class Product extends AbstractEntity {
         },
     })
     images: File[]
+
+    @ManyToMany(() => PCategory, (pCategory) => pCategory.products)
+    @JoinTable({
+        name: 'product_categories',
+        joinColumn: {
+            name: 'productId',
+            referencedColumnName: 'id',
+        },
+        inverseJoinColumn: {
+            name: 'categoryId',
+            referencedColumnName: 'id',
+        },
+    })
+    categories: PCategory[]
 }

@@ -4,7 +4,7 @@ import { Product } from 'src/modules/products/entities/product.entity'
 import { RCategory } from 'src/modules/r_categories/entities/r_category.entity'
 import { Restaurant } from 'src/modules/restaurants/entities/restaurant.entity'
 import { User } from 'src/modules/users/entities/user.entity'
-import { Entity, ManyToOne, OneToOne } from 'typeorm'
+import { Entity, ManyToMany, ManyToOne, OneToOne } from 'typeorm'
 
 @Entity()
 export class File extends S3File {
@@ -14,8 +14,8 @@ export class File extends S3File {
     @OneToOne(() => PCategory, (p_category) => p_category.image, { onDelete: 'CASCADE' })
     p_category: PCategory
 
-    @ManyToOne(() => Product, (product) => product.images, { onDelete: 'CASCADE' })
-    product: Product
+    @ManyToMany(() => Product, (product) => product.images, { onDelete: 'CASCADE' })
+    product: Product[]
 
     @OneToOne(() => RCategory, (r_category) => r_category.image, { onDelete: 'CASCADE' })
     r_category: RCategory
