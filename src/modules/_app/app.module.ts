@@ -5,6 +5,7 @@ import { configValidationSchema } from '../../common/config/config.schema'
 import { UsersModule } from '../users/users.module'
 import { AuthModule } from '../auth/auth.module'
 import { AppLoggerMiddleware } from 'src/common/middlewares/logging.middleware'
+import { FileModule } from '../file/file.module'
 
 @Module({
     imports: [
@@ -35,6 +36,7 @@ import { AppLoggerMiddleware } from 'src/common/middlewares/logging.middleware'
         }),
         AuthModule,
         UsersModule,
+        FileModule
     ],
 })
 export class AppModule implements NestModule {

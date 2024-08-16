@@ -11,7 +11,6 @@ import { RefreshTokenDto } from './dto/refresh-token.dto'
 
 @Controller('auth')
 @ApiTags('AUTH')
-@ApiBearerAuth()
 export class AuthController {
     constructor(private readonly authService: AuthService) { }
 
@@ -41,6 +40,7 @@ export class AuthController {
     }
 
     @Get('/me')
+    @ApiBearerAuth()
     async me(@CurrentUser() user: User) {
         console.log(user)
         return user

@@ -1,25 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { Avatar } from '../entities/avatar.entity'
-
-export class CreateAvatarDto {
-    @ApiProperty()
-    url: string
-
-    @ApiProperty()
-    fileName: string
-
-    @ApiProperty()
-    filePath: string
-
-    @ApiProperty()
-    bucket: string
-
-    @ApiProperty()
-    fileType: string
-
-    @ApiProperty()
-    fileSize: number
-}
+import { CreateFileDto } from 'src/modules/file/dto/create-file.dto'
 
 export class CreateUserDto {
     @ApiProperty()
@@ -37,6 +17,6 @@ export class CreateUserDto {
     @ApiProperty()
     password: string
 
-    @ApiProperty({ type: () => CreateAvatarDto })
-    avatar?: CreateAvatarDto
+    @ApiProperty({ type: () => CreateFileDto })
+    avatar?: CreateFileDto
 }
